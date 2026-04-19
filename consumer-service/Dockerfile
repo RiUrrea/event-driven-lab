@@ -1,18 +1,13 @@
-# consumer-service/Dockerfile
-# Usa una imagen base de JRE ligera
-FROM eclipse-temurin:17-jre-jammy
+# Usa una imagen base de JDK 17 disponible
+FROM eclipse-temurin:17-jdk
 
-# Argumento para el JAR
-ARG JAR_FILE=target/*.jar
+# Argumento para el JAR (Gradle genera en build/libs)
+ARG JAR_FILE=build/libs/*.jar
 
-# Directorio de trabajo
 WORKDIR /app
 
-# Copia el JAR
 COPY ${JAR_FILE} app.jar
 
-# No necesita exponer puerto si solo consume mensajes
-# EXPOSE 8081
+EXPOSE 8080
 
-# Comando de ejecución
 ENTRYPOINT ["java", "-jar", "app.jar"]

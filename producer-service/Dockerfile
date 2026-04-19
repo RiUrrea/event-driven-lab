@@ -1,17 +1,13 @@
-# Usa una imagen base ligera de JDK 17
-FROM openjdk:17-jdk-slim
+# Usa una imagen base de JDK 17 disponible
+FROM eclipse-temurin:17-jdk
 
-# Argumento para el JAR (se pasa durante la construcción en docker-compose)
-ARG JAR_FILE=target/*.jar
+# Argumento para el JAR (Gradle genera en build/libs)
+ARG JAR_FILE=build/libs/*.jar
 
-# Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia el JAR construido a la imagen
 COPY ${JAR_FILE} app.jar
 
-# Expone el puerto de la aplicación
 EXPOSE 8080
 
-# Comando para ejecutar la aplicación
 ENTRYPOINT ["java", "-jar", "app.jar"]
